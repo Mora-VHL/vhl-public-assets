@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Allekirjoitusbanneri – riskitesti</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 24px; color: #222; background: #f3f3f0; }
+      .ohje { max-width: 640px; background: #fff; border: 1px solid #dcdbdb; border-radius: 12px; padding: 16px 20px; }
+      .ohje li { margin: 4px 0; }
+      button { margin: 12px 0 20px; padding: 10px 16px; font-size: 15px; font-weight: 700; border: 0; border-radius: 10px; background: #3f6334; color: #fff; cursor: pointer; }
+      #tila { margin-left: 10px; font-size: 14px; color: #3f6334; }
+      #allekirjoitus { background: #fff; padding: 16px; display: inline-block; border: 1px dashed #aaa; }
+    </style>
+  </head>
+  <body>
+    <div class="ohje">
+      <h1 style="font-size: 20px; margin: 0 0 8px">Allekirjoitusbanneri – riskitesti</h1>
+      <p style="margin: 0 0 8px">Ei lopullinen ulkoasu. Testaa, miten Outlook ja vastaanottajat käsittelevät kuvista koottua, animoitua allekirjoitusta.</p>
+      <ol>
+        <li>Valitse <b>Kopioi testiallekirjoitus</b> ja liitä se Outlookin allekirjoitusasetuksiin (testaa vanha Outlook, uusi Outlook ja selain-Outlook).</li>
+        <li>Lähetä testiviesti Outlook-, Gmail- ja puhelinosoitteeseen.</li>
+        <li>Tarkista: liikkuuko lumi, ovatko kuvat linkkejä (sähköposti avaa uuden viestin, verkko-osoite ja banneri avaavat vhlgroup.fi:n) ja näkyvätkö alt-tekstit, jos kuvat on estetty.</li>
+        <li>Tärkein: avaa lähetetty viesti ja katso, onko kuva <b>linkki</b> (osoite raw.githubusercontent.com) vai <b>liite</b>. Vain linkkinä vuodenaika voi vaihtua itsestään.</li>
+      </ol>
+    </div>
+
+    <button type="button" id="kopioi">Kopioi testiallekirjoitus</button><span id="tila" role="status"></span>
+
+    <div id="allekirjoitus">
+      <table cellpadding="0" cellspacing="0" border="0" width="600" style="border-collapse: collapse; width: 600px">
+        <tr>
+          <td colspan="2" style="padding: 0">
+            <a href="https://vhlgroup.fi/" target="_blank"><img src="https://raw.githubusercontent.com/Mora-VHL/vhl-public-assets/main/allekirjoitus-testi/banneri.gif" width="600" height="190" alt="Etunimi Sukunimi · Työrooli · +358 40 123 4567 · VHL Group Oy" style="display: block; border: 0; width: 600px; height: 190px" /></a>
+          </td>
+        </tr>
+        <tr>
+          <td width="380" style="padding: 0">
+            <a href="mailto:etunimi.sukunimi@vhlgroup.fi"><img src="https://raw.githubusercontent.com/Mora-VHL/vhl-public-assets/main/allekirjoitus-testi/kaista-sahkoposti.png" width="380" height="38" alt="etunimi.sukunimi@vhlgroup.fi" style="display: block; border: 0; width: 380px; height: 38px" /></a>
+          </td>
+          <td width="220" style="padding: 0">
+            <a href="https://vhlgroup.fi/" target="_blank"><img src="https://raw.githubusercontent.com/Mora-VHL/vhl-public-assets/main/allekirjoitus-testi/kaista-verkko.png" width="220" height="38" alt="vhlgroup.fi" style="display: block; border: 0; width: 220px; height: 38px" /></a>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" style="padding: 10px 0 0; font-family: Arial, sans-serif; font-size: 10px; line-height: 14px; color: #555555; font-style: italic">
+            Tämä sähköposti voi sisältää luottamuksellista ja/tai salassapitovelvollisuuden alaista tietoa. (Riskitesti – vastuuvapausteksti lyhennetty.)
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <script>
+      document.getElementById('kopioi').addEventListener('click', () => {
+        const range = document.createRange()
+        range.selectNode(document.getElementById('allekirjoitus'))
+        const sel = window.getSelection()
+        sel.removeAllRanges()
+        sel.addRange(range)
+        const ok = document.execCommand('copy')
+        sel.removeAllRanges()
+        document.getElementById('tila').textContent = ok ? 'Kopioitu – liitä Outlookiin.' : 'Kopiointi ei onnistunut – valitse allekirjoitus hiirellä ja kopioi Ctrl+C.'
+      })
+    </script>
+  </body>
+</html>
